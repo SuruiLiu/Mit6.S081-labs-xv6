@@ -77,11 +77,38 @@ sys_sleep(void)
 
 
 #ifdef LAB_PGTBL
+
+//base is the first pte in the pagetable,len is the number of pte(must <=32 cause uint only have 32 bit)
 int
-sys_pgaccess(void)
-{
-  // lab pgtbl: your code here.
-  return 0;
+sys_pgaccess(void){
+  pagetable_t u_pt = myproc()->pagetable;
+  uint64 fir_addr, mask_addr;
+  int size;
+  uint mask = 0;
+  
+  if(argaddr(0, &fir_addr) < 0)
+    return -1;
+  if(argint(1, &size) < 0)
+    return -1;
+  if(argaddr(2, &mask_addr) < 0)
+    return -1;
+  
+  if(size > 32){return -1;}
+  
+  pte_t* fir_pte = walk(u_pt, fir_addr, 0);
+  
+  for(int i =0; i < size; i++){
+    if((fir_pte[i]&PTE_A)&&(fir_pte[i]&PTE_V)){
+      mask |= (1<<i);
+      fir_pte[i] ^= PTE_A;
+    }
+  }
+  
+  if(copyout(u_pt, (uint64)mask_addr, (char*)&mask, sizeof(uint)) < 0)
+    return -1;
+  
+  return 0; // success
+  
 }
 #endif
 
