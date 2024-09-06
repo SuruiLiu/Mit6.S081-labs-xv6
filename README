@@ -1,3 +1,15 @@
+Usyscall:
+The general idea of this lab is that when creating a process, 
+the pid of the process is directly put into the shared space, 
+and then when the user queries the pid, 
+it does not have to jump to the kernel through ecall, saving the cost of saving the scene.
+
+Pgaccess:
+Use walk to get the first_pte in the pgtb, but walk isn't declared in the defs.h so add it
+Also remember the mask max bit is 32 because the uint(4*8bit)
+argaddr argint
+base is va, len is the number of pte in the pgtb
+
 xv6 is a re-implementation of Dennis Ritchie's and Ken Thompson's Unix
 Version 6 (v6).  xv6 loosely follows the structure and style of v6,
 but is implemented for a modern RISC-V multiprocessor using ANSI C.
