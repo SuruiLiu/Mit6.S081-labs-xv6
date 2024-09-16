@@ -1,4 +1,5 @@
 This experiment needs to understand the process of function call, including stack pointer and frame pointer, etc. For example, in the classic riscv definition, the return address is also a part of the current stack frame, and the return address of the function can be obtained through fp. the main things in the alarm are how to count clock interrupts and what determines the instruction address at which user-space code resumes execution. p->trapframe->epc
+![Alt text](traps.png)
 
 xv6 is a re-implementation of Dennis Ritchie's and Ken Thompson's Unix
 Version 6 (v6).  xv6 loosely follows the structure and style of v6,
